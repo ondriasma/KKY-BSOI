@@ -1,0 +1,11 @@
+
+__pycache__/
+*.pyc
+
+images/
+recog_images/
+
+faceid/output/*.pickle
+
+*.pem
+fullchain.pem
