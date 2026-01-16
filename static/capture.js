@@ -90,27 +90,47 @@
   }
 
   function recognizepicture(data) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/recognize", true);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/recognize", true);
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-          response = JSON.parse(xhr.response);
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              var response = JSON.parse(xhr.response);
+              var faces = response.faces;
+              console.log(faces);
 
-          faces = response.faces;
-          console.log(faces);
+              var names = [];
+              var shouldRedirect = false;
 
-          names = [];
-          faces.forEach(face => names.push(face.name+" ("+Math.round(face.prob*100)+"%)"));
-          names = names.join(", ")
-          console.log(names);
+              //Projdeme všechny tváře a sesbíráme jména
+              faces.forEach(face => {
+                  var confidence = Math.round(face.prob * 100);
+                  names.push(face.name + " (" + confidence + "%)");
+                  
+                  // Pokud aspoň jedna tvář sedí, přesměrujeme uživatele
+                  if (face.prob > 0.5 && face.name !== "unknown") {
+                      shouldRedirect = true;
+                  }
+              });
 
-          results.innerHTML = names;
+              if (names.length > 0) {
+                  results.innerHTML = names.join(", ");
+              } else {
+                  results.innerHTML = "Nikdo nebyl detekován.";
+              }
+
+              // Přesměrováí
+              if (shouldRedirect) {
+                  console.log("Přístup povolen, přesměrovávám za 1 sekundu...");
+                  setTimeout(function() {
+                      window.location.href = "/static/welcome.html";
+                  }, 1000); 
+              }
+          }
       }
-    }
-      
-    xhr.setRequestHeader('Content-Type', 'text/plain');
-    xhr.send(data);
+        
+      xhr.setRequestHeader('Content-Type', 'text/plain');
+      xhr.send(data);
   }
 
   function recognize() {
