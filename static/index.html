@@ -19,6 +19,18 @@
     <button id="startbutton">Take photo</button> 
     <button id="recognizebutton">Recognize</button> 
   </div>
+  <div id="auth-section">
+    <h3>Registrace vyučujícího</h3>
+    <input type="text" id="regUser" placeholder="Jméno">
+    <input type="password" id="regPass" placeholder="Heslo">
+    <button onclick="authAction('/register', 'regUser', 'regPass')">Zaregistrovat se</button>
+
+    <h3>Přihlášení heslem</h3>
+    <input type="text" id="loginUser" placeholder="Jméno">
+    <input type="password" id="loginPass" placeholder="Heslo">
+    <button onclick="authAction('/login', 'loginUser', 'loginPass')">Přihlásit se</button>
+  </div>
+  
   <p id="results"></p>
   <canvas id="canvas">
   </canvas>

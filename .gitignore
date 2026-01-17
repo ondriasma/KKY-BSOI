@@ -4,8 +4,10 @@ __pycache__/
 
 images/
 recog_images/
+faceid/dataset/*
 
 faceid/output/*.pickle
 
 *.pem
 fullchain.pem
+users.json

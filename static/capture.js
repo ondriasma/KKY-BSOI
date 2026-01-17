@@ -108,7 +108,7 @@
                   names.push(face.name + " (" + confidence + "%)");
                   
                   // Pokud aspoň jedna tvář sedí, přesměrujeme uživatele
-                  if (face.prob > 0.5 && face.name !== "unknown") {
+                  if (face.prob > 0.7 && face.name !== "unknown") {
                       shouldRedirect = true;
                   }
               });
@@ -145,7 +145,35 @@
     }
   }
 
+
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
+
+  // Autentizace při přihlašování heslem
+  window.authAction = function(endpoint, userField, passField) {
+    var user = document.getElementById(userField).value;
+    var pass = document.getElementById(passField).value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", endpoint, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) {
+                alert("Successfully logged in!");
+                if (endpoint === "/login") {
+                    window.location.href = "/static/welcome.html";
+                }
+            } else {
+                alert("Chyba: " + response.message);
+            }
+        }
+    };
+    xhr.send(JSON.stringify({username: user, password: pass}));
+  }
 })();
+
+  
