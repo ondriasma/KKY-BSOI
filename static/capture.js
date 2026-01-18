@@ -107,7 +107,7 @@
               //Go throuhg faces and collect names
               faces.forEach(face => {
                   var confidence = Math.round(face.prob * 100);
-                  names.push(face.name + " (" + confidence + "%)");
+                  //names.push(face.name + " (" + confidence + "%)");
                   
                   //If there is a match, redirect
                   if (face.prob > 0.7 && face.name !== "unknown") {
@@ -127,7 +127,9 @@
                   setTimeout(function() {
                       window.location.href = "/static/welcome.html";
                   }, 1000); 
-              }
+              } else {
+                results.innerHTML = "Login failed - Face not recognized.";
+            }
           }
       }
         
