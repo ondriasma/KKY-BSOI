@@ -165,10 +165,14 @@
         if (xhr.readyState === 4) {
             var response = JSON.parse(xhr.responseText);
             if (xhr.status === 200) {
-                alert("Successfully logged in!");
+                alert("Success!");
                 localStorage.setItem('logged', 'true');
                 if (endpoint === "/login") {
                     window.location.href = "/static/welcome.html";
+                }
+                if (endpoint === "/register") {
+                    document.getElementById(userField).value = "";
+                    document.getElementById(passField).value = "";
                 }
             } else {
                 alert("Error: " + response.message);
