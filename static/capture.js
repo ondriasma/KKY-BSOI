@@ -118,7 +118,7 @@
               if (names.length > 0) {
                   results.innerHTML = names.join(", ");
               } else {
-                  results.innerHTML = "Nobody has been detected.";
+                  //results.innerHTML = "Nobody has been detected.";
               }
 
               if (shouldRedirect) {
