@@ -11,7 +11,7 @@ import os
 
 tornado.log.enable_pretty_logging()
 app_log = logging.getLogger("tornado.application")
-
+# "Database" for registeerd users
 USER_DB = "users.json"
 
 def load_users():

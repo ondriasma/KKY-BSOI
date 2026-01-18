@@ -28,7 +28,7 @@ sudo python3 faceid_server.py
 Webové rozhraní
 ===============
 
-https://sulis81.zcu.cz/static/index.html
+https://aether50.zcu.cz/static/index.html
 
 (upravte hostname dle vaší situace)
 
