@@ -23,7 +23,8 @@ def save_users(users):
 
 class RootHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello World")
+        #self.write("Hello World")
+        self.redirect("static/index.html")
 
 
 class ReceiveImageHandler(tornado.web.RequestHandler):
@@ -72,6 +73,10 @@ class LoginHandler(tornado.web.RequestHandler):
             self.set_status(401)
             self.write({"status": "error", "message": "Wrong username or password"})
 
+class LogoutHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.redirect("/")
+
 application = tornado.web.Application([
     (r'/', RootHandler),
     (r"/receive_image", ReceiveImageHandler),
@@ -79,6 +84,7 @@ application = tornado.web.Application([
     (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": "static/"}),
     (r"/register", RegisterHandler),
     (r"/login", LoginHandler),
+    (r"/logout", LogoutHandler),
 ])
 
 if __name__ == '__main__':

@@ -16,19 +16,19 @@
     <video id="video">Video stream not available.</video>
   </div>
   <div class="buttons">
-    <button id="startbutton">Take photo</button> 
+    <!--<button id="startbutton">Take photo</button>-->
     <button id="recognizebutton">Recognize</button> 
   </div>
   <div id="auth-section">
-    <h3>Registrace vyučujícího</h3>
-    <input type="text" id="regUser" placeholder="Jméno">
-    <input type="password" id="regPass" placeholder="Heslo">
-    <button onclick="authAction('/register', 'regUser', 'regPass')">Zaregistrovat se</button>
+    <h3>Registration:</h3>
+    <input type="text" id="regUser" placeholder="Username">
+    <input type="password" id="regPass" placeholder="Password">
+    <button onclick="authAction('/register', 'regUser', 'regPass')">Register</button>
 
-    <h3>Přihlášení heslem</h3>
-    <input type="text" id="loginUser" placeholder="Jméno">
-    <input type="password" id="loginPass" placeholder="Heslo">
-    <button onclick="authAction('/login', 'loginUser', 'loginPass')">Přihlásit se</button>
+    <h3>Password Login:</h3>
+    <input type="text" id="loginUser" placeholder="Username">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button onclick="authAction('/login', 'loginUser', 'loginPass')">Login</button>
   </div>
   
   <p id="results"></p>

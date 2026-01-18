@@ -53,10 +53,12 @@
       }
     }, false);
 
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      ev.preventDefault();
-    }, false);
+    if (startbutton) {
+      startbutton.addEventListener('click', function(ev){
+        takepicture();
+        ev.preventDefault();
+      }, false);
+    }
 
     recognizebutton.addEventListener('click', function(ev){
       recognize();
@@ -102,12 +104,12 @@
               var names = [];
               var shouldRedirect = false;
 
-              //Projdeme všechny tváře a sesbíráme jména
+              //Go throuhg faces and collect names
               faces.forEach(face => {
                   var confidence = Math.round(face.prob * 100);
                   names.push(face.name + " (" + confidence + "%)");
                   
-                  // Pokud aspoň jedna tvář sedí, přesměrujeme uživatele
+                  //If there is a match, redirect
                   if (face.prob > 0.7 && face.name !== "unknown") {
                       shouldRedirect = true;
                   }
@@ -116,12 +118,12 @@
               if (names.length > 0) {
                   results.innerHTML = names.join(", ");
               } else {
-                  results.innerHTML = "Nikdo nebyl detekován.";
+                  results.innerHTML = "Nobody has been detected.";
               }
 
-              // Přesměrováí
               if (shouldRedirect) {
-                  console.log("Přístup povolen, přesměrovávám za 1 sekundu...");
+                  console.log("Access granted");
+                  localStorage.setItem('logged', 'true');
                   setTimeout(function() {
                       window.location.href = "/static/welcome.html";
                   }, 1000); 
@@ -150,7 +152,7 @@
   // once loading is complete.
   window.addEventListener('load', startup, false);
 
-  // Autentizace při přihlašování heslem
+  // Login with password authentization
   window.authAction = function(endpoint, userField, passField) {
     var user = document.getElementById(userField).value;
     var pass = document.getElementById(passField).value;
@@ -164,15 +166,27 @@
             var response = JSON.parse(xhr.responseText);
             if (xhr.status === 200) {
                 alert("Successfully logged in!");
+                localStorage.setItem('logged', 'true');
                 if (endpoint === "/login") {
                     window.location.href = "/static/welcome.html";
                 }
             } else {
-                alert("Chyba: " + response.message);
+                alert("Error: " + response.message);
             }
         }
     };
     xhr.send(JSON.stringify({username: user, password: pass}));
+  }
+
+  window.logout = function() {
+    localStorage.removeItem('logged'); 
+    window.location.href = "/logout"; 
+  };
+  if (window.location.pathname.includes("welcome.html")) {
+    if (localStorage.getItem('logged') !== 'true') {
+        alert("Access denied - unauthorized!");//when trying to access the page directly without the login
+        window.location.href = "/";
+    }
   }
 })();
 
